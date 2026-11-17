@@ -192,11 +192,7 @@ function roundSchedule(e){
  return '<section class="round-session"><h3>'+escape(session.day)+' · '+escape(session.period)+' · Sessão '+escape(session.id)+'</h3><p>Pesagem <strong>'+escape(time.weighIn)+'</strong> · Início da sessão <strong>'+escape(time.start)+'</strong></p><div class="round-grid">'+session.rounds.map(round=>{
  const members=round.athletes.map(id=>athletes.find(a=>a.id===id)).filter(Boolean);
  const categories=[...new Set(members.map(category))];
- const weightLabels=['F','M'].map(sex=>{
- const weights=[...new Map(members.filter(a=>a.sex===sex).map(a=>[a.weightKg+'|'+a.above,a])).values()].sort((a,b)=>a.weightKg-b.weightKg||Number(a.above)-Number(b.above));
- return weights.length?(sex==='F'?'Feminino':'Masculino')+': CATG. '+weights.map(a=>(a.above?'+':'−')+a.weightKg).join(' / ')+' kg':'';
- }).filter(Boolean).join(' · ');
- return '<article class="round-card"><h4>Round '+escape(round.id)+' <span>('+escape(weightLabels)+')</span></h4><p>'+members.length+' atletas</p><ul>'+categories.map(c=>'<li>'+escape(c)+'</li>').join('')+'</ul><details><summary>Ver atletas do round '+escape(round.id)+'</summary><ul>'+members.map(a=>'<li><strong>'+escape(a.name)+'</strong><br>'+escape(category(a))+(a.double?' · Dobra na Open':'')+'</li>').join('')+'</ul></details></article>';
+ return '<article class="round-card"><h4>Round '+escape(round.id)+' <span>· '+members.length+' atletas</span></h4><ul>'+categories.map(c=>'<li>'+escape(c)+'</li>').join('')+'</ul><details><summary>Ver atletas do round '+escape(round.id)+'</summary><ul>'+members.map(a=>'<li><strong>'+escape(a.name)+'</strong><br>'+escape(category(a))+(a.double?' · Dobra na Open':'')+'</li>').join('')+'</ul></details></article>';
  }).join('')+'</div></section>';
  }).join('')+'</section>';
 }
